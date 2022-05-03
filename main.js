@@ -19,40 +19,37 @@ function renderToDom(target, string) {
   document.querySelector(target).innerHTML = string;
 }
 
-function fadeInEffect(thingToFade) {
-  var op = 0;
-  var fadeTarget = document.querySelector(thingToFade);
+function fadeInEffect(thingToFadeIn) {
+  var opacityCounter = 0;
+  var fadeTarget = document.querySelector(thingToFadeIn);
   var fadeTimer = setInterval(function () {
-      if (op < 1) {
-          fadeTarget.style.opacity = op;
-          op += 0.1;
+      if (opacityCounter < 1) {
+          fadeTarget.style.opacity = opacityCounter;
+          opacityCounter += 0.1;
       } else {
           clearInterval(fadeTimer);
       }
   }, 50);
 }
 
-function fadeOutEffect(thingToFadeOut, target, string, target2, string2, thingToFadeIn) {
-  var op = 1;
-  var fadeTarget = document.querySelector(`#` + `${thingToFadeOut}`);
-  var fadeTarget2 = document.querySelector(target)
+function fadeOutEffect(thingToFadeOut, divToRedefine, stringToInsert, thingToFadeIn) {
+  var fadeTarget = document.querySelector(thingToFadeOut);
+  var opacityCounter = 1;
   var fadeTimer = setInterval(function () {
-      if (op > 0) {
-          fadeTarget.style.opacity = op;
-          fadeTarget2.style.opacity = op;
-          op -= 0.1;
+      if (opacityCounter > 0) {
+          fadeTarget.style.opacity = opacityCounter;
+          opacityCounter -= 0.1;
       } else {
           clearInterval(fadeTimer);
-          renderToDom(target, string); //example: hat dialogue to change
-          renderToDom(target2, string2); //example: something new to replace the faded element
-          fadeInEffect(thingToFadeIn); //example: fading in that replacement
-          fadeInEffect(target);
+          renderToDom(divToRedefine, stringToInsert)
+          fadeInEffect(thingToFadeIn);
       }
   }, 50);
 }
 
 document.querySelector("#begin-btn").addEventListener('click', (e) => {
-  fadeOutEffect(e.target.id, "#hat-text", "<p>Step forward</p>", "#input-container", nameForm, "#form-container");
+  fadeOutEffect(`#` + `${e.target.id}`, "#input-container", nameForm, "#form-container");
+  fadeOutEffect("#hat-text", "#hat-text", "<p>Step forward</p>", "#hat-text");
 }
 
 );
