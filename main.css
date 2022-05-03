@@ -55,6 +55,7 @@ p {
 }
 
 .form-container {
+  opacity: 0;
   display: inline-block;
   justify-content: center;
   background-color: rgba(0, 0, 0, 0.7);

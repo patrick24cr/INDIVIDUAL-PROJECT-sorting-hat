@@ -19,53 +19,34 @@ function renderToDom(target, string) {
   document.querySelector(target).innerHTML = string;
 }
 
-// function fadeInEffect(thingToFadeIn) {
-//   console.log("start of fadeIn function")
-//   var fadeTarget = document.querySelector(thingToFadeIn);
-//   var fadeEffect = setInterval(function () {
-//       if (!fadeTarget.style.opacity) {
-//           fadeTarget.style.opacity = 0.0;
-//           console.log("had to initialize opacity")
-//       }
-//       if (fadeTarget.style.opacity < 1) {
-//           fadeTarget.style.opacity += 0.1;
-//           console.log("why is this looping");
-//           console.log(thingToFadeIn);
-//           console.log(fadeTarget.style.opacity);
-//       } else {
-//           clearInterval(fadeEffect);
-//           console.log("cleared the interval")
-//       }
-//   }, 50);
-// }
-
 function fadeInEffect(thingToFade) {
+  var op = 0;
   var fadeTarget = document.querySelector(thingToFade);
-  var fadeEffect = setInterval(function () {
-      if (!fadeTarget.style.opacity) {
-          fadeTarget.style.opacity = 0;
-      }
-      if (fadeTarget.style.opacity < 1) {
-          fadeTarget.style.opacity += 0.1;
+  var fadeTimer = setInterval(function () {
+      if (op < 1) {
+          fadeTarget.style.opacity = op;
+          op += 0.1;
       } else {
-          clearInterval(fadeEffect);
+          clearInterval(fadeTimer);
       }
   }, 50);
 }
 
 function fadeOutEffect(thingToFadeOut, target, string, target2, string2, thingToFadeIn) {
+  var op = 1;
   var fadeTarget = document.querySelector(`#` + `${thingToFadeOut}`);
-  var fadeEffect = setInterval(function () {
-      if (!fadeTarget.style.opacity) {
-          fadeTarget.style.opacity = 1;
-      }
-      if (fadeTarget.style.opacity > 0) {
-          fadeTarget.style.opacity -= 0.1;
+  var fadeTarget2 = document.querySelector(target)
+  var fadeTimer = setInterval(function () {
+      if (op > 0) {
+          fadeTarget.style.opacity = op;
+          fadeTarget2.style.opacity = op;
+          op -= 0.1;
       } else {
-          clearInterval(fadeEffect);
-          renderToDom(target, string); //hat dialogue, for example
-          renderToDom(target2, string2); //something new to replace the faded element, for example
-
+          clearInterval(fadeTimer);
+          renderToDom(target, string); //example: hat dialogue to change
+          renderToDom(target2, string2); //example: something new to replace the faded element
+          fadeInEffect(thingToFadeIn); //example: fading in that replacement
+          fadeInEffect(target);
       }
   }, 50);
 }
