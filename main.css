@@ -62,3 +62,70 @@ p {
   padding: 20px;
   border-radius: 15px;
 }
+
+.house-container {
+  opacity: 0;
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.house-container > div {
+  margin: 0px 5px;
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 10px;
+  border-radius: 15px;
+  width: 250px
+}
+
+.house-container > div > img {
+  width: 70px;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+.student-card {
+  display: flex;
+  justify-content: space-around;
+}
+
+.name-part {
+  text-align: left;
+  background-color: rgb(36, 36, 36);
+  border-radius: 5px;
+  margin: 5px 0px;
+  padding: 5px 10px;
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: auto;
+}
+
+.gryffindor > .student-card > .name-part {
+  color: rgb(190, 50, 50);
+}
+
+.hufflepuff > .student-card > .name-part {
+  color: rgb(217, 182, 70);
+}
+
+.ravenclaw > .student-card > .name-part {
+  color: rgb(75, 183, 255);
+}
+
+.slytherin > .student-card > .name-part {
+  color: rgb(80, 190, 80);
+}
+
+.expel-part {
+  font-size: 15px;
+  color: rgb(170, 115, 115);
+  text-align: left;
+  background-color: rgb(63, 7, 7);
+  border-radius: 5px;
+  margin: 5px 0px;
+  padding: 5px 10px;
+  border: none;
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+}
