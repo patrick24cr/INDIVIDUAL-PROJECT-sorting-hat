@@ -41,43 +41,16 @@ let students =
     name: 'Cindy Loyola',
     school: 'gryffindor',
     expelled: false,
+  },
+  {
+    id: 7,
+    name: 'Adam Levine',
+    school: 'gryffindor',
+    expelled: true,
   }
 ]
 
-const initialHTML = `
-<div class="background">
-    <div class="title">
-      <H1>The Sorting Ceremony</H1>
-    </div>
-    <div class="hat-container">
-      <div class="hat-img">
-        <img src="images/hat.png" alt="the sorting hat">
-      </div>
-      <div class="hat-text" id="hat-text">
-        <p>Would you like to begin?</p>
-      </div>
-    </div>
-    <div id="input-container">
-      <button type="button" class="btn btn-secondary btn-lg" id="begin-btn">Let it begin</button>
-    </div>
-    <div class="house-container" id="house-container">
-      <div class="gryffindor" id="gryffindor">
-        <img src="images/gryffindor.png" alt="gryffindor coat of arms">
-      </div>
-      <div class="hufflepuff" id="hufflepuff">
-        <img src="images/hufflepuff.png" alt="hufflepuff coat of arms">
-      </div>
-      <div class="ravenclaw" id="ravenclaw">
-        <img src="images/ravenclaw.png" alt="ravenclaw coat of arms">
-      </div>
-      <div class="slytherin" id="slytherin">
-        <img src="images/slytherin.png" alt="ravenclaw coat of arms">
-      </div>
-    </div>
-  </div>
-`
-
-function cardsOnDom() {
+function returnListDomString(house) {
   let studentsCopy = [...students];
   function compare( a, b ) {
     if ( a.id > b.id ){
@@ -89,69 +62,101 @@ function cardsOnDom() {
     return 0;
   }
   studentsCopy.sort(compare); //sorts the copy of students array by id, highest to lowest
-  const cardString = `
-  <div class="student-card">
-    <div class="name-part">Patrick Burns</div>
-    <button class="expel-part">Ex</button>
-  </div>
-  `
+
   let gryffindorString = '<img src="images/gryffindor.png" alt="gryffindor coat of arms">';
   let hufflepuffString = '<img src="images/hufflepuff.png" alt="hufflepuff coat of arms">';
   let ravenclawString = '<img src="images/ravenclaw.png" alt="ravenclaw coat of arms">';
   let slytherinString = '<img src="images/slytherin.png" alt="ravenclaw coat of arms">';
+  let voldemortString = ''
 
   studentsCopy.forEach((student) => {
     if (student.school === 'gryffindor' && student.expelled === false) {
       gryffindorString += `<div class="student-card">
       <div class="name-part">${student.name}</div>
-      <button class="expel-part">Ex</button>
+      <button class="expel-part" id="expel--${student.id}">Ex</button>
       </div>`
     }
     if (student.school === 'hufflepuff' && student.expelled === false) {
       hufflepuffString += `<div class="student-card">
       <div class="name-part">${student.name}</div>
-      <button class="expel-part">Ex</button>
+      <button class="expel-part" id="expel--${student.id}">Ex</button>
       </div>`
     }
     if (student.school === 'ravenclaw' && student.expelled === false) {
       ravenclawString += `<div class="student-card">
       <div class="name-part">${student.name}</div>
-      <button class="expel-part">Ex</button>
+      <button class="expel-part" id="expel--${student.id}">Ex</button>
       </div>`
     }
     if (student.school === 'slytherin' && student.expelled === false) {
       slytherinString += `<div class="student-card">
       <div class="name-part">${student.name}</div>
-      <button class="expel-part">Ex</button>
+      <button class="expel-part" id="expel--${student.id}">Ex</button>
+      </div>`
+    }
+    if (student.expelled === true) {
+      voldemortString += `<div class="student-card">
+      <div class="name-part">${student.name}</div>
       </div>`
     }
   })
-  renderToDom("#gryffindor", gryffindorString)
-  renderToDom("#hufflepuff", hufflepuffString)
-  renderToDom("#ravenclaw", ravenclawString)
-  renderToDom("#slytherin", slytherinString)
+  if (house === "gryffindor") {
+    return gryffindorString
+  }
+  if (house === "hufflepuff") {
+    return hufflepuffString
+  }
+  if (house === "ravenclaw") {
+    return ravenclawString
+  }
+  if (house === "slytherin") {
+    return slytherinString
+  }
+  if (house == "voldemort") {
+    return voldemortString
+  }
 }
 
-const nameForm = `
-<div class="form-container" id="form-container">
-  <div class="row g-3 align-items-center">
-    <div class="col-auto">
-      <label for="text" class="col-form-label">Name</label>
-    </div>
-    <div class="col-auto">
-      <input type="text" class="form-control" id="name-form" aria-label="name">
-    </div>
-    <div class="col-auto">
-      <button type="button" class="btn btn-secondary btn-sm">Sort</button>
-    </div>
-  </div>
-</div>
-`
 function renderToDom(target, string) {
   document.querySelector(target).innerHTML = string;
 }
 
 function initialDOMSetup(){
+  const initialHTML = `
+<div class="background">
+  <div class="title" id="title">
+    <img src="images/hogwarts.png" alt="hogwarts coat of arms" id="hogwarts-btn">
+    <H1>Sorting Ceremony</H1>
+    <img src="images/voldemort.png" alt="symbol of voldemort" id="voldemort-btn">
+  </div>
+  <div class="hat-background">
+    <div class="hat-container">
+      <div class="hat-img">
+        <img src="images/hat.png" alt="the sorting hat">
+      </div>
+      <div class="hat-text" id="hat-text">
+        <p>Would you like to begin?</p>
+      </div>
+    </div>
+  </div>
+  <div id="input-container">
+    <button type="button" class="btn btn-secondary btn-lg" id="begin-btn">Let it begin</button>
+  </div>
+  <div class="house-container" id="house-container">
+  <div class="gryffindor" id="gryffindor">
+  ${returnListDomString("gryffindor")}
+</div>
+<div class="hufflepuff" id="hufflepuff">
+  ${returnListDomString("hufflepuff")}
+</div>
+<div class="ravenclaw" id="ravenclaw">
+  ${returnListDomString("ravenclaw")}
+</div>
+<div class="slytherin" id="slytherin">
+  ${returnListDomString("slytherin")}
+</div>
+  </div>
+</div>`
   renderToDom("#bodyDiv", initialHTML)
 }
 
@@ -184,21 +189,59 @@ function fadeOutEffect(thingToFadeOut, divToRedefine, stringToInsert, thingToFad
 }
 
 function eventListeners() {
-  let firstClick = true;
+  let layoutComplete = false;
+  let voldemortArmyDisplayed = false;
   document.querySelector("#begin-btn").addEventListener('click', (e) => {
+    const nameForm = `
+    <div class="form-container" id="form-container">
+      <div class="row g-3 align-items-center">
+        <div class="col-auto">
+          <label for="text" class="col-form-label">Name</label>
+        </div>
+        <div class="col-auto">
+          <input type="text" class="form-control" id="name-form" aria-label="name">
+        </div>
+        <div class="col-auto">
+          <button type="button" class="btn btn-secondary btn-sm">Sort</button>
+        </div>
+      </div>
+    </div>`
     fadeOutEffect(`#` + `${e.target.id}`, "#input-container", nameForm, "#form-container");
     fadeOutEffect("#hat-text", "#hat-text", "<p>Step forward</p>", "#hat-text");
   });
   document.querySelector("#input-container").addEventListener('click', (e) => {
-    console.log(firstClick);
-    if (document.querySelector("#name-form") != null && firstClick === true) {
+    if (document.querySelector("#name-form") != null && layoutComplete === false) {
       fadeInEffect("#house-container");
-      firstClick = false;
+      layoutComplete = true;
+    }
+  });
+  document.querySelector("#title").addEventListener('click', (e) => {
+    if (e.target.id === "voldemort-btn" && voldemortArmyDisplayed === false && layoutComplete === true) {
+      const voldemortArmy = `<div class="voldemort" id="voldemort">${returnListDomString("voldemort")}</div>`
+      fadeOutEffect("#house-container", "#house-container", voldemortArmy, "#house-container");
+      voldemortArmyDisplayed = true;
+    }
+    if (e.target.id === "hogwarts-btn" && voldemortArmyDisplayed === true && layoutComplete === true) {
+      const hogwartsStudentBody = `
+      <div class="gryffindor" id="gryffindor">
+      ${returnListDomString("gryffindor")}
+      </div>
+      <div class="hufflepuff" id="hufflepuff">
+      ${returnListDomString("hufflepuff")}
+      </div>
+      <div class="ravenclaw" id="ravenclaw">
+      ${returnListDomString("ravenclaw")}
+      </div>
+      <div class="slytherin" id="slytherin">
+      ${returnListDomString("slytherin")}
+      </div>`
+      fadeOutEffect("#house-container", "#house-container", hogwartsStudentBody, "#house-container");
+      voldemortArmyDisplayed = false;
     }
   });
 }
 
 
+
 initialDOMSetup();
 eventListeners();
-cardsOnDom()
