@@ -7,7 +7,7 @@ function eventListeners() {
   let layoutComplete = false;
   let voldemortArmyDisplayed = false;
   let firstNameClickOfRound = false;
-  let counterArray = [0,0,0,0,0,0];
+  let counterArray = [0, 0, 0, 0, 0, 0];
   function counterAdvance(number) {
     counterArray[number]++;
     if (counterArray[number] > 5) {
@@ -162,7 +162,7 @@ function eventListeners() {
       expelled: false,
     };
     let dialogueCounter = 0;
-    switch(chosenSchool) {
+    switch (chosenSchool) {
       case "gryffindor":
         dialogueCounter = 1;
         break;
@@ -173,7 +173,7 @@ function eventListeners() {
         dialogueCounter = 3;
         break;
       case "slytherin":
-        dialogueCounter= 4;
+        dialogueCounter = 4;
         break;
     }
     fadeOutEffect(
