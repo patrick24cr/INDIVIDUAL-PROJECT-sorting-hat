@@ -7,8 +7,14 @@ function eventListeners() {
   let layoutComplete = false;
   let voldemortArmyDisplayed = false;
   let firstNameClickOfRound = false;
-
-  document.querySelector("#begin-btn").addEventListener('click', (e) => {
+  let counterArray = [0,0,0,0,0,0];
+  function counterAdvance(number) {
+    counterArray[number]++;
+    if (counterArray[number] > 5) {
+      counterArray[number] = 0;
+    }
+  }
+  document.querySelector("#begin-btn").addEventListener("click", (e) => {
     const nameForm = `
     <form>
       <div class="form-container" id="form-container">
@@ -24,51 +30,73 @@ function eventListeners() {
           </div>
         </div>
       </div>
-    </form>`
-    fadeOutEffect(`#${e.target.id}`, "#input-container", nameForm, "#form-container");
-    fadeOutEffect("#hat-text", "#hat-text", `<p>What is your name?</p>`, "#hat-text");
+    </form>`;
+    fadeOutEffect(
+      `#${e.target.id}`,
+      "#input-container",
+      nameForm,
+      "#form-container"
+    );
+    fadeOutEffect(
+      "#hat-text",
+      "#hat-text",
+      `<p>What is your name?</p>`,
+      "#hat-text"
+    );
   });
 
-  document.querySelector("#input-container").addEventListener('keypress', (e) => {
-    if (document.querySelector("#name-field") != null && layoutComplete === false && e.target.id != "submit-btn") {
-      fadeInEffect("#house-container");
-      layoutComplete = true;
-    }
-    if (e.target.id === 'name-field') {
-      if (firstNameClickOfRound === true) {
-        fadeOutEffect("#hat-text", "#hat-text", `<p>${hatDialogue('approach')}</p>`, "#hat-text");
+  document
+    .querySelector("#input-container")
+    .addEventListener("keypress", (e) => {
+      if (
+        document.querySelector("#name-field") != null &&
+        layoutComplete === false &&
+        e.target.id != "submit-btn"
+      ) {
+        fadeInEffect("#house-container");
+        layoutComplete = true;
       }
-      firstNameClickOfRound = false;
-    }
-  });
+      if (e.target.id === "name-field") {
+        if (firstNameClickOfRound === true) {
+          fadeOutEffect(
+            "#hat-text",
+            "#hat-text",
+            `<p>${hatDialogue("approach", counterArray)}</p>`,
+            "#hat-text"
+          );
+          counterAdvance(0);
+        }
+        firstNameClickOfRound = false;
+      }
+    });
 
-  document.querySelector("#input-container").addEventListener('submit', (e) => {
+  document.querySelector("#input-container").addEventListener("submit", (e) => {
     e.preventDefault();
     const createId = (array) => {
       if (array.length) {
         const idArray = [];
         array.forEach((el) => {
           idArray.push(el.id);
-        })
+        });
         return Math.max(...idArray) + 1;
       } else {
         return 0;
       }
-    }
-    let chosenSchool = ""
+    };
+    let chosenSchool = "";
     const dice = Math.floor(Math.random() * 4);
     switch (dice) {
       case 0:
-        chosenSchool = "gryffindor"
+        chosenSchool = "gryffindor";
         break;
       case 1:
-        chosenSchool = "hufflepuff"
+        chosenSchool = "hufflepuff";
         break;
       case 2:
-        chosenSchool = "ravenclaw"
+        chosenSchool = "ravenclaw";
         break;
       case 3:
-        chosenSchool = "slytherin"
+        chosenSchool = "slytherin";
         break;
       default:
         console.log(`Dice didn't work`);
@@ -81,36 +109,41 @@ function eventListeners() {
         let slytherinCount = 0;
         array.forEach((el) => {
           switch (el.school) {
-            case 'gryffindor':
-              gryffindorCount++
+            case "gryffindor":
+              gryffindorCount++;
               break;
-            case 'hufflepuff':
-              hufflepuffCount++
+            case "hufflepuff":
+              hufflepuffCount++;
               break;
-            case 'ravenclaw':
-              ravenclawCount++
+            case "ravenclaw":
+              ravenclawCount++;
               break;
-            case 'slytherin':
-              slytherinCount++
+            case "slytherin":
+              slytherinCount++;
               break;
           }
-        })
-        const arrayOfCounts = [gryffindorCount, hufflepuffCount, ravenclawCount, slytherinCount]
+        });
+        const arrayOfCounts = [
+          gryffindorCount,
+          hufflepuffCount,
+          ravenclawCount,
+          slytherinCount,
+        ];
         const spread = Math.max(...arrayOfCounts) - Math.min(...arrayOfCounts);
         if (spread < 3) {
-          console.log("the schools are well balanced")
+          console.log("the schools are well balanced");
         } else {
           const objOfCounts = {
             gryffindor: gryffindorCount,
             hufflepuff: hufflepuffCount,
             ravenclaw: ravenclawCount,
-            slytherin: slytherinCount
+            slytherin: slytherinCount,
           };
-          var smallest = '';
+          var smallest = "";
           for (var key in objOfCounts) {
-            if (smallest !== '' && objOfCounts[key] < objOfCounts[smallest]) {
+            if (smallest !== "" && objOfCounts[key] < objOfCounts[smallest]) {
               smallest = key;
-            } else if (smallest === '') {
+            } else if (smallest === "") {
               smallest = key;
             }
           }
@@ -120,29 +153,70 @@ function eventListeners() {
       } else {
         console.log("student array is too short to balance");
       }
-    }
+    };
     checkBalance(students);
     const newStudentObject = {
       id: createId(students),
       name: document.querySelector("#name-field").value,
       school: chosenSchool,
       expelled: false,
+    };
+    let dialogueCounter = 0;
+    switch(chosenSchool) {
+      case "gryffindor":
+        dialogueCounter = 1;
+        break;
+      case "hufflepuff":
+        dialogueCounter = 2;
+        break;
+      case "ravenclaw":
+        dialogueCounter = 3;
+        break;
+      case "slytherin":
+        dialogueCounter= 4;
+        break;
     }
-    fadeOutEffect("#hat-text", "#hat-text", `<p>${hatDialogue(`${chosenSchool}`)}</p>`, "#hat-text");
-    console.log(newStudentObject)
+    fadeOutEffect(
+      "#hat-text",
+      "#hat-text",
+      `<p>${hatDialogue(`${chosenSchool}`, counterArray)}</p>`,
+      "#hat-text"
+    );
+    counterAdvance(dialogueCounter);
+    console.log(newStudentObject);
     students.push(newStudentObject);
-    fadeOutEffect(`#${newStudentObject.school}`, `#${newStudentObject.school}`, returnHouseDOMString(newStudentObject.school), `#${newStudentObject.school}`)
-    document.querySelector('form').reset();
+    fadeOutEffect(
+      `#${newStudentObject.school}`,
+      `#${newStudentObject.school}`,
+      returnHouseDOMString(newStudentObject.school),
+      `#${newStudentObject.school}`
+    );
+    document.querySelector("form").reset();
     firstNameClickOfRound = true;
-  })
+  });
 
-  document.querySelector("#title").addEventListener('click', (e) => {
-    if (e.target.id === "voldemort-btn" && voldemortArmyDisplayed === false && layoutComplete === true) {
-      const voldemortArmy = `<div class="voldemort" id="voldemort">${returnHouseDOMString("voldemort")}</div>`
-      fadeOutEffect("#house-container", "#house-container", voldemortArmy, "#house-container");
+  document.querySelector("#title").addEventListener("click", (e) => {
+    if (
+      e.target.id === "voldemort-btn" &&
+      voldemortArmyDisplayed === false &&
+      layoutComplete === true
+    ) {
+      const voldemortArmy = `<div class="voldemort" id="voldemort">${returnHouseDOMString(
+        "voldemort"
+      )}</div>`;
+      fadeOutEffect(
+        "#house-container",
+        "#house-container",
+        voldemortArmy,
+        "#house-container"
+      );
       voldemortArmyDisplayed = true;
     }
-    if (e.target.id === "hogwarts-btn" && voldemortArmyDisplayed === true && layoutComplete === true) {
+    if (
+      e.target.id === "hogwarts-btn" &&
+      voldemortArmyDisplayed === true &&
+      layoutComplete === true
+    ) {
       const hogwartsStudentBody = `
       <div class="gryffindor" id="gryffindor">
       ${returnHouseDOMString("gryffindor")}
@@ -155,32 +229,50 @@ function eventListeners() {
       </div>
       <div class="slytherin" id="slytherin">
       ${returnHouseDOMString("slytherin")}
-      </div>`
-      fadeOutEffect("#house-container", "#house-container", hogwartsStudentBody, "#house-container");
+      </div>`;
+      fadeOutEffect(
+        "#house-container",
+        "#house-container",
+        hogwartsStudentBody,
+        "#house-container"
+      );
       voldemortArmyDisplayed = false;
     }
   });
-  
-  document.querySelector("#house-container").addEventListener('click', (e) => {
+
+  document.querySelector("#house-container").addEventListener("click", (e) => {
     if (e.target.id.includes("--")) {
-      const idSplit = e.target.id.split("--")
-      let [method, studentId] = e.target.id.split("--")
-      studentId = Number(studentId)
-      const indexToExpel = students.findIndex(person => person.id === studentId);
+      const idSplit = e.target.id.split("--");
+      let [method, studentId] = e.target.id.split("--");
+      studentId = Number(studentId);
+      const indexToExpel = students.findIndex(
+        (person) => person.id === studentId
+      );
       students[indexToExpel].expelled = true;
-      fadeOutEffect("#hat-text", "#hat-text", `<p>${hatDialogue('expel')}</p>`, "#hat-text");
+      fadeOutEffect(
+        "#hat-text",
+        "#hat-text",
+        `<p>${hatDialogue("expel", counterArray)}</p>`,
+        "#hat-text"
+      );
+      counterAdvance(5);
       let redCounter = 35;
-        let redTarget = document.querySelector(`#name--${studentId}`);
-        let redTimer = setInterval(function () {
-            if (redCounter < 255) {
-                redTarget.style.backgroundColor = `rgb(${redCounter}, 36, 36)`;
-                redCounter += 55;
-            } else {
-              fadeOutEffect(`#${students[indexToExpel].school}`, `#${students[indexToExpel].school}`, returnHouseDOMString(students[indexToExpel].school), `#${students[indexToExpel].school}`)
-              students[indexToExpel].school = "null";
-              clearInterval(redTimer);
-            }
-        }, 50);
+      let redTarget = document.querySelector(`#name--${studentId}`);
+      let redTimer = setInterval(function () {
+        if (redCounter < 255) {
+          redTarget.style.backgroundColor = `rgb(${redCounter}, 36, 36)`;
+          redCounter += 55;
+        } else {
+          fadeOutEffect(
+            `#${students[indexToExpel].school}`,
+            `#${students[indexToExpel].school}`,
+            returnHouseDOMString(students[indexToExpel].school),
+            `#${students[indexToExpel].school}`
+          );
+          students[indexToExpel].school = "null";
+          clearInterval(redTimer);
+        }
+      }, 50);
     }
   });
 }
