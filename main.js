@@ -20,7 +20,7 @@ function returnListDomString(house) {
   let hufflepuffString = '<img src="images/hufflepuff.png" alt="hufflepuff coat of arms">';
   let ravenclawString = '<img src="images/ravenclaw.png" alt="ravenclaw coat of arms">';
   let slytherinString = '<img src="images/slytherin.png" alt="ravenclaw coat of arms">';
-  let voldemortString = ''
+  let voldemortString = '<img src="images/skull2.png" alt="skull">';
 
   studentsCopy.forEach((student) => {
     if (student.school === 'gryffindor' && student.expelled === false) {
@@ -144,7 +144,7 @@ function fadeOutEffect(thingToFadeOut, divToRedefine, stringToInsert, thingToFad
 function hatDialogue(event) {
   const dice = Math.floor(Math.random() * 6);
   if (event === "approach") {
-    const lines = ["Step forward, and tell me your name", "Hmm, interesting is this one. What's your name?", "I've got a feeling about you, what's your name?", "No sense in delaying the innevitable, tell me your name?", "Step right up and tell me your name", "And what's your name?"]
+    const lines = ["I've seen plenty like you before", "Hmm, interesting is this one", "I've got a feeling about you", "No sense in delaying the innevitable", "Step right up", "Hmm, this one is difficult"]
     return lines[dice]
   }
   if (event === "gryffindor") {
@@ -191,7 +191,7 @@ function eventListeners() {
       </div>
     </form>`
     fadeOutEffect(`#${e.target.id}`, "#input-container", nameForm, "#form-container");
-    fadeOutEffect("#hat-text", "#hat-text", `<p>${hatDialogue('approach')}</p>`, "#hat-text");
+    fadeOutEffect("#hat-text", "#hat-text", `<p>What is your name?</p>`, "#hat-text");
   });
   document.querySelector("#input-container").addEventListener('keypress', (e) => {
     if (document.querySelector("#name-field") != null && layoutComplete === false && e.target.id != "submit-btn") {
