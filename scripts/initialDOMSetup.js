@@ -1,7 +1,7 @@
 import returnHouseDOMString from "./returnHouseDOMString.js";
 import { renderToDom } from "./utilities.js";
 
-function initialDOMSetup(){
+function initialDOMSetup() {
   const initialHTML = `
 <div class="background">
   <div class="title" id="title">
@@ -36,8 +36,8 @@ function initialDOMSetup(){
   ${returnHouseDOMString("slytherin")}
 </div>
   </div>
-</div>`
-  renderToDom("#bodyDiv", initialHTML)
+</div>`;
+  renderToDom("#bodyDiv", initialHTML);
 }
 
 export default initialDOMSetup;

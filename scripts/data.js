@@ -1,6 +1,3 @@
-let students =
-[
-  
-]
+let students = [];
 
 export default students;
