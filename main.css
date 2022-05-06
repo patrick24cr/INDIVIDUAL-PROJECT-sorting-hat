@@ -91,6 +91,7 @@ h1 {
   margin-top: 20px;
   display: flex;
   justify-content: center;
+  align-items: flex-start;
 }
 
 .house-container > div {
@@ -107,6 +108,7 @@ h1 {
   margin-bottom: 10px;
 }
 
+
 .student-card {
   display: flex;
   justify-content: space-around;
@@ -114,7 +116,7 @@ h1 {
 
 .name-part {
   text-align: left;
-  background-color: rgb(36, 36, 36);
+  background-color: rgb(35, 35, 35);
   border-radius: 5px;
   margin: 5px 0px;
   padding: 5px 10px;
