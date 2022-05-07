@@ -211,6 +211,8 @@ function eventListeners() {
         "#house-container"
       );
       voldemortArmyDisplayed = true;
+      document.querySelector("#name-field").disabled = true;
+      document.querySelector("#submit-btn").disabled = true;
     }
     if (
       e.target.id === "hogwarts-btn" &&
@@ -237,6 +239,8 @@ function eventListeners() {
         "#house-container"
       );
       voldemortArmyDisplayed = false;
+      document.querySelector("#name-field").disabled = false;
+      document.querySelector("#submit-btn").disabled = false;
     }
   });
 
