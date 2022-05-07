@@ -201,6 +201,7 @@ function eventListeners() {
       voldemortArmyDisplayed === false &&
       layoutComplete === true
     ) {
+      // create dom string for voldemort army list
       const voldemortArmy = `<div class="voldemort" id="voldemort">${returnHouseDOMString(
         "voldemort"
       )}</div>`;
@@ -259,7 +260,9 @@ function eventListeners() {
         `<p>${hatDialogue("expel", counterArray)}</p>`,
         "#hat-text"
       );
+      // advance the dialogue counter for expel lines
       counterAdvance(5);
+      // red animation
       let redCounter = 35;
       let redTarget = document.querySelector(`#name--${studentId}`);
       let redTimer = setInterval(function () {
