@@ -211,6 +211,9 @@ function eventListeners() {
         "#house-container"
       );
       voldemortArmyDisplayed = true;
+      fadeOutEffect(
+        "#input-container"
+      );
     }
     if (
       e.target.id === "hogwarts-btn" &&
@@ -237,6 +240,9 @@ function eventListeners() {
         "#house-container"
       );
       voldemortArmyDisplayed = false;
+      fadeInEffect(
+        "#input-container"
+      );
     }
   });
 
